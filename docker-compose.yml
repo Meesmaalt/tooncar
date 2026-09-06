@@ -4,6 +4,7 @@ services:
   tooncar:
     build: .
     image: toon-car-racer:latest
+    pull_policy: build
     container_name: toon-car-racer
     restart: unless-stopped
     ports:
