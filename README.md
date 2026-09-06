@@ -1,31 +1,20 @@
-# Toon Car Racer 3D
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+</div>
 
-Kolmemõõtmeline toon-võidusõidumäng (Three.js) + online multiplayer server.
+# Run and deploy your AI Studio app
 
-## Funktsioonid
-- **Päris 3D** (Three.js): perspektiivkaamera, varjud, low-poly autod
-- Rajad: ovaal, kõrb, jää, öö, kaheksa
-- Autod eri statidega, elud, drift, võimed (rakett, nitro, kilp…)
-- Online: tubade nimekiri, loo/liitu, Socket.IO
+This contains everything you need to run your app locally.
 
-## Docker / Portainer
+View your app in AI Studio: https://ai.studio/apps/1548a2fc-f2cb-4001-b3aa-eb8b251fec2b
 
-```bash
-docker compose up -d --build
-# http://localhost:3080
-```
+## Run Locally
 
-## Kohalikult
+**Prerequisites:**  Node.js
 
-```bash
-npm install
-npm start
-```
 
-## Juhtimine
-WASD · SPACE võime · SHIFT drift
-
-## Stack
-- Client: Three.js r170 + Socket.IO
-- Server: Node 20 + Express + Socket.IO
-- Deploy: üks Docker konteiner (port 3080)
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

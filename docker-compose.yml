@@ -1,19 +1,14 @@
-# Portainer: Stacks → Add stack → Web editor → paste this
-# Or: docker compose up -d
+version: '3.8'
+
 services:
-  tooncar:
-    build: .
-    image: toon-car-racer:latest
-    pull_policy: build
-    container_name: toon-car-racer
+  tooncar-racing:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tooncar-racing-3d
     restart: unless-stopped
     ports:
-      - "3080:3080"
+      - "3000:3000"
     environment:
-      - PORT=3080
-    # optional resource limits for Portainer
-    # deploy:
-    #   resources:
-    #     limits:
-    #       cpus: "1"
-    #       memory: 512M
+      - NODE_ENV=production
+      - PORT=3000

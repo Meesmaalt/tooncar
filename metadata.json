@@ -1,0 +1,6 @@
+{
+  "name": "Toon Car Racing 3D",
+  "description": "Brauseripõhine 3D cartoon võidusõidumäng power-upide, AI vastaste, mitme teemaraja ja reaalajas võrgumänguga.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
