@@ -1,0 +1,18 @@
+# Portainer: Stacks → Add stack → Web editor → paste this
+# Or: docker compose up -d
+services:
+  tooncar:
+    build: .
+    image: toon-car-racer:latest
+    container_name: toon-car-racer
+    restart: unless-stopped
+    ports:
+      - "3080:3080"
+    environment:
+      - PORT=3080
+    # optional resource limits for Portainer
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "1"
+    #       memory: 512M
