@@ -3,14 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Toon Car Racer</title>
+  <title>Toon Car Racer 3D</title>
   <link rel="stylesheet" href="style.css" />
   <script src="/socket.io/socket.io.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
 <body>
   <div id="bg-decor"></div>
   <div id="ui">
-    <!-- HUD -->
     <div id="hud" class="hidden">
       <div class="hud-card">
         <div class="hud-item"><span class="label">Ring</span><span id="lap">1</span><span class="muted">/3</span></div>
@@ -22,21 +29,17 @@
         <div id="msg"></div>
       </div>
     </div>
-
     <div id="countdown" class="hidden">3</div>
-    <canvas id="minimap" width="148" height="108" class="hidden"></canvas>
-
     <div id="touch-controls" class="hidden">
       <div id="stick-zone"><div id="stick-base"><div id="stick-knob"></div></div></div>
       <button id="btn-fire" class="touch-btn" type="button">🚀</button>
       <button id="btn-drift" class="touch-btn drift" type="button">💨</button>
     </div>
 
-    <!-- MENU -->
     <div id="menu-screen" class="panel">
-      <div class="logo">🚗</div>
-      <h1>Toon Car Racer</h1>
-      <p class="tagline">Võidusõit · võimed · online sõpradega</p>
+      <div class="logo">🏎️</div>
+      <h1>Toon Car Racer <span class="badge3d">3D</span></h1>
+      <p class="tagline">Kolmemõõtmeline toon-võidusõit · raketid · online</p>
       <div class="field">
         <label for="player-name">Sinu nimi</label>
         <input type="text" id="player-name" maxlength="12" placeholder="Mängija" />
@@ -51,7 +54,6 @@
       <p class="hint-keys">WASD · SPACE võime · SHIFT drift</p>
     </div>
 
-    <!-- CAR -->
     <div id="car-screen" class="panel hidden">
       <h1>Vali auto</h1>
       <div class="car-grid" id="car-grid"></div>
@@ -61,7 +63,6 @@
       </div>
     </div>
 
-    <!-- MAP -->
     <div id="start-screen" class="panel hidden">
       <h1>Vali rada</h1>
       <div class="map-grid" id="map-grid"></div>
@@ -71,36 +72,31 @@
       </div>
     </div>
 
-    <!-- LOBBY -->
     <div id="lobby-screen" class="panel hidden wide">
       <h1>Online lobby</h1>
-      <p class="lobby-intro">Loo tuba või liitu nimekirjast / koodiga. Avalikud toad ilmuvad allolevas nimekirjas.</p>
+      <p class="lobby-intro">Loo tuba või liitu nimekirjast / koodiga.</p>
       <div id="room-browser" class="room-browser">
         <div class="section-label">Käimasolevad toad</div>
         <div id="room-list" class="room-list"><div class="muted-line">Laen…</div></div>
         <button type="button" id="btn-refresh-rooms" class="btn tiny">Värskenda</button>
       </div>
-
       <div id="lobby-create">
         <div class="lobby-actions">
-        <div class="field">
-          <label for="room-name">Toa nimi (valikuline)</label>
-          <input type="text" id="room-name" maxlength="24" placeholder="Minu võidusõit" />
-        </div>
-        <label class="check" style="margin-bottom:12px;display:inline-flex"><input type="checkbox" id="chk-public" checked /> Avalik tuba (nähtav nimekirjas)</label>
+          <div class="field">
+            <label for="room-name">Toa nimi</label>
+            <input type="text" id="room-name" maxlength="24" placeholder="Minu võidusõit" />
+          </div>
+          <label class="check" style="margin-bottom:12px;display:inline-flex">
+            <input type="checkbox" id="chk-public" checked /> Avalik tuba
+          </label>
           <button id="btn-create-room" class="btn primary" type="button">Loo tuba</button>
           <div class="divider"><span>või</span></div>
           <div class="join-box">
-            <input type="text" id="join-code" placeholder="Kleebi toa kood" maxlength="24" autocomplete="off" />
+            <input type="text" id="join-code" placeholder="Toa kood" maxlength="12" autocomplete="off" />
             <button id="btn-join-room" class="btn accent" type="button">Liitu</button>
           </div>
         </div>
-        <div id="recent-rooms" class="recent hidden">
-          <div class="recent-title">Hiljutised toad</div>
-          <div id="recent-list"></div>
-        </div>
       </div>
-
       <div id="lobby-room" class="hidden">
         <div class="room-header">
           <div>
@@ -113,17 +109,15 @@
           <div id="host-badge" class="badge hidden">Host</div>
         </div>
         <div id="player-list" class="player-list"></div>
-        <div class="section-label">Rada (host valib)</div>
+        <div class="section-label">Rada</div>
         <div class="map-grid small" id="lobby-map-grid"></div>
         <button id="btn-start-mp" class="btn primary full hidden" type="button">Alusta võistlust</button>
-        <p id="waiting-msg" class="waiting">Ootan, kuni host alustab…</p>
+        <p id="waiting-msg" class="waiting">Ootan hosti…</p>
       </div>
-
       <p id="lobby-status" class="status"></p>
-      <button id="lobby-back" class="btn ghost" type="button">Tagasi menüüsse</button>
+      <button id="lobby-back" class="btn ghost" type="button">Tagasi</button>
     </div>
 
-    <!-- END -->
     <div id="end-screen" class="panel hidden">
       <h1 id="end-title">Finish</h1>
       <div id="standings" class="standings"></div>
@@ -135,6 +129,6 @@
     </div>
   </div>
   <canvas id="game"></canvas>
-  <script src="game.js"></script>
+  <script type="module" src="game.js"></script>
 </body>
 </html>

@@ -359,3 +359,24 @@ h1 {
 .room-row .meta { color: var(--muted); font-size: 0.75rem; margin-top: 2px; }
 .room-row .title { font-weight: 700; }
 .muted-line { color: var(--muted); font-size: 0.85rem; padding: 8px 0; }
+
+.badge3d {
+  display: inline-block;
+  font-size: 0.55em;
+  vertical-align: middle;
+  background: linear-gradient(135deg, #5b8cff, #c77dff);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-left: 4px;
+  letter-spacing: 0.05em;
+}
+#game {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+  touch-action: none;
+}
